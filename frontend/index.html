@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专利高级检索系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .search-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .keyword-group {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+        }
+
+        .keyword-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 10px;
+            align-items: end;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .results-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .patent-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .patent-title {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .patent-meta {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+            font-size: 18px;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 专利高级检索系统</h1>
+            <p class="subtitle">Google Patents Advanced Search - 支持检索范围、分类号筛选</p>
+        </div>
+
+        <div class="search-section">
+            <h2>高级检索</h2>
+            <form id="searchForm">
+                <!-- 关键词组 -->
+                <div class="form-group">
+                    <label>关键词（支持多个）</label>
+                    <div id="keywordsContainer"></div>
+                    <button type="button" class="btn-secondary" onclick="addKeyword()">+ 添加关键词</button>
+                    <div class="help-text">💡 提示：可指定在标题、摘要、权利要求或全文中检索</div>
+                </div>
+
+                <!-- 分类号 -->
+                <div class="form-group">
+                    <label>IPC分类号（多个用逗号分隔）</label>
+                    <input type="text" id="ipcClasses" placeholder="例如：G06F,H04L">
+                    <div class="help-text">国际专利分类号，如 G06F, H04L</div>
+                </div>
+
+                <div class="form-group">
+                    <label>CPC分类号（多个用逗号分隔）</label>
+                    <input type="text" id="cpcClasses" placeholder="例如：G06F,H04L">
+                    <div class="help-text">合作专利分类号</div>
+                </div>
+
+                <!-- 日期范围 -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label>起始日期（Publication Date）</label>
+                        <input type="date" id="afterDate" value="2020-01-01">
+                    </div>
+
+                    <div class="form-group">
+                        <label>截止日期</label>
+                        <input type="date" id="beforeDate">
+                    </div>
+                </div>
+
+                <!-- 结果数量 -->
+                <div class="form-group">
+                    <label>结果数量</label>
+                    <input type="number" id="maxResults" value="10" min="1" max="30">
+                </div>
+
+                <button type="submit" class="btn" id="searchBtn">开始检索</button>
+            </form>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="results">检索结果</button>
+            <button class="tab" data-tab="history">检索历史</button>
+        </div>
+
+        <div class="tab-content active" id="results">
+            <div class="results-section">
+                <div id="resultsContainer">
+                    <p style="text-align: center; color: #999; padding: 40px;">
+                        👆 请填写检索条件并点击"开始检索"
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="history">
+            <div class="results-section">
+                <h3>检索历史</h3>
+                <div id="historyContainer">
+                    <p style="text-align: center; color: #999; padding: 40px;">暂无历史</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api/v1';
+        let keywordCount = 0;
+
+        // 添加第一个关键词输入框
+        window.onload = () => {
+            addKeyword();
+        };
+
+        // 添加关键词输入组
+        function addKeyword() {
+            const container = document.getElementById('keywordsContainer');
+            const id = keywordCount++;
+
+            const div = document.createElement('div');
+            div.className = 'keyword-group';
+            div.id = `keyword-${id}`;
+            div.innerHTML = `
+                <div class="keyword-row">
+                    <div class="form-group" style="margin:0;">
+                        <input type="text" class="keyword-term" placeholder="输入关键词，如：区块链">
+                    </div>
+                    <div class="form-group" style="margin:0;">
+                        <select class="keyword-scope">
+                            <option value="TAC">全文</option>
+                            <option value="CL">权利要求</option>
+                            <option value="AB">摘要</option>
+                            <option value="TI">标题</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn-danger" onclick="removeKeyword(${id})">删除</button>
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+        // 删除关键词
+        function removeKeyword(id) {
+            const elem = document.getElementById(`keyword-${id}`);
+            if (elem) elem.remove();
+        }
+
+        // Tab切换
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+
+                if (tab.dataset.tab === 'history') {
+                    loadHistory();
+                }
+            });
+        });
+
+        // 表单提交
+        document.getElementById('searchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // 收集关键词
+            const keywords = [];
+            document.querySelectorAll('.keyword-group').forEach(group => {
+                const term = group.querySelector('.keyword-term').value.trim();
+                const scope = group.querySelector('.keyword-scope').value;
+                if (term) {
+                    keywords.push({ term, scope });
+                }
+            });
+
+            if (keywords.length === 0) {
+                alert('请至少输入一个关键词');
+                return;
+            }
+
+            // 收集分类号
+            const ipcStr = document.getElementById('ipcClasses').value.trim();
+            const cpcStr = document.getElementById('cpcClasses').value.trim();
+            const ipc_classes = ipcStr ? ipcStr.split(',').map(s => s.trim()).filter(s => s) : null;
+            const cpc_classes = cpcStr ? cpcStr.split(',').map(s => s.trim()).filter(s => s) : null;
+
+            // 日期
+            const afterDate = document.getElementById('afterDate').value;
+            const beforeDate = document.getElementById('beforeDate').value || '2030-12-31';
+            const maxResults = parseInt(document.getElementById('maxResults').value);
+
+            const searchBtn = document.getElementById('searchBtn');
+            searchBtn.disabled = true;
+            searchBtn.textContent = '检索中...（可能需要30-60秒）';
+
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.innerHTML = '<div class="loading">⏳ 正在检索专利... 请耐心等待</div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/search`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        keywords,
+                        ipc_classes,
+                        cpc_classes,
+                        date_range: [afterDate, beforeDate],
+                        max_results: maxResults
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayResults(data.data);
+                } else {
+                    resultsContainer.innerHTML = `<p style="color: red;">检索失败: ${data.error || '未知错误'}</p>`;
+                }
+            } catch (error) {
+                resultsContainer.innerHTML = `<p style="color: red;">错误: ${error.message}</p>`;
+            } finally {
+                searchBtn.disabled = false;
+                searchBtn.textContent = '开始检索';
+            }
+        });
+
+        function displayResults(data) {
+            const container = document.getElementById('resultsContainer');
+
+            let html = `
+                <h3>找到 ${data.result_count} 个结果</h3>
+                <p style="margin: 10px 0; color: #666;">检索ID: ${data.search_id}</p>
+                <hr style="margin: 20px 0;">
+            `;
+
+            data.results.forEach((patent, idx) => {
+                html += `
+                    <div class="patent-card">
+                        <div class="patent-title">${idx + 1}. ${patent.title || '无标题'}</div>
+                        <div class="patent-meta">📄 专利号: ${patent.patent_number || 'N/A'}</div>
+                        ${patent.publication_date ? `<div class="patent-meta">📅 公开日期: ${patent.publication_date}</div>` : ''}
+                        ${patent.link ? `<div class="patent-meta">🔗 <a href="${patent.link}" target="_blank">查看详情</a></div>` : ''}
+                        ${patent.pdf_url ? `<div class="patent-meta">📥 <a href="${patent.pdf_url}" target="_blank">下载PDF</a></div>` : ''}
+                    </div>
+                `;
+            });
+
+            if (data.analysis_report) {
+                html += `
+                    <h3 style="margin-top: 30px;">分析报告</h3>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; white-space: pre-wrap; font-family: monospace; font-size: 12px; max-height: 500px; overflow-y: auto;">
+                        ${data.analysis_report}
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        async function loadHistory() {
+            const container = document.getElementById('historyContainer');
+            container.innerHTML = '<div class="loading">加载中...</div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/history`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: 'default_user',
+                        page: 1,
+                        limit: 20
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.data.items.length > 0) {
+                    let html = '';
+                    data.data.items.forEach(item => {
+                        html += `
+                            <div class="patent-card" style="cursor: pointer;" onclick="viewHistory('${item.id}')">
+                                <div style="font-weight: 600; margin-bottom: 5px;">${item.query}</div>
+                                <div style="font-size: 13px; color: #666;">
+                                    ${item.created_at} | 结果: ${item.result_count} 条
+                                </div>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                } else {
+                    container.innerHTML = '<p style="text-align: center; color: #999; padding: 40px;">暂无历史</p>';
+                }
+            } catch (error) {
+                container.innerHTML = `<p style="color: red;">加载失败: ${error.message}</p>`;
+            }
+        }
+
+        async function viewHistory(searchId) {
+            document.querySelector('[data-tab="results"]').click();
+            const container = document.getElementById('resultsContainer');
+            container.innerHTML = '<div class="loading">加载历史结果...</div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/search/${searchId}/results`);
+                const data = await response.json();
+
+                if (data.success) {
+                    // 显示历史结果
+                    let html = `<h3>历史检索结果</h3><hr style="margin: 20px 0;">`;
+                    data.data.forEach((item, idx) => {
+                        const patent = item.patent;
+                        html += `
+                            <div class="patent-card">
+                                <div class="patent-title">${idx + 1}. ${patent.title || '无标题'}</div>
+                                <div class="patent-meta">专利号: ${patent.patent_number || 'N/A'}</div>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                }
+            } catch (error) {
+                container.innerHTML = `<p style="color: red;">加载失败: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+
+</html>

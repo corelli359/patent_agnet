@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专利专家系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border-left: 5px solid #667eea;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .skill-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .skill-title {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .skill-desc {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .skill-status {
+            font-size: 13px;
+            color: #28a745;
+            font-weight: 500;
+        }
+
+        .skill-status.pending {
+            color: #ffc107;
+        }
+
+        .workflow {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .workflow h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .workflow-steps {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .workflow-step {
+            flex: 1;
+            min-width: 80px;
+            text-align: center;
+            padding: 15px 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .workflow-arrow {
+            color: #667关eea;
+            font-size: 24px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .demo-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .demo-area {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 85%;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 专利专家系统</h1>
+            <p class="subtitle">Patent Expert System - 从创意到专利授权的完整AI辅助流程</p>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p style="color: #666; margin-top: 10px;">系统完成度: 85% | 6个核心Skills已就绪</p>
+        </div>
+
+        <div class="workflow">
+            <h2>📊 完整工作流程</h2>
+            <div class="workflow-steps">
+                <div class="workflow-step">Skill 1<br>发明意图总结</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Skill 2<br>技术交底书</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Skill 3<br>专利起草</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Skill 4<br>实质审查</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Skill 5<br>专利修复</div>
+                <div class="workflow-arrow">→</div>
+                <div class="workflow-step">Skill 6<br>专利检索</div>
+            </div>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-card" onclick="window.location.href='skill1_intent.html'">
+                <div class="skill-number">1</div>
+                <div class="skill-title">发明意图总结</div>
+                <div class="skill-desc">
+                    通过多轮AI对话引导，将碎片化的技术创意转化为结构化的发明意图文档。
+                </div>
+                <div class="skill-status">✅ 已实现 | API就绪</div>
+            </div>
+
+            <div class="skill-card" onclick="window.location.href='skill2_disclosure.html'">
+                <div class="skill-number">2</div>
+                <div class="skill-title">技术交底书撰写</div>
+                <div class="skill-desc">
+                    基于发明意图自动生成符合《专利审查指南》规范的技术交底书，包含技术领域、背景技术、发明内容等完整章节。
+                </div>
+                <div class="skill-status">✅ 已实现 | API就绪</div>
+            </div>
+
+            <div class="skill-card" onclick="window.location.href='skill3_drafting.html'">
+                <div class="skill-number">3</div>
+                <div class="skill-title">专利申请文件起草</div>
+                <div class="skill-desc">
+                    生成正式的专利申请文件：权利要求书（独立+从属）、说明书（自动段落编号）、摘要。
+                </div>
+                <div class="skill-status">✅ 已实现 | API就绪</div>
+            </div>
+
+            <div class="skill-card" onclick="window.location.href='skill4_examination.html'">
+                <div class="skill-number">4</div>
+                <div class="skill-title">实质审查模拟</div>
+                <div class="skill-desc">
+                    模拟审查员视角，进行形式审查、新颖性审查、创造性审查、清楚性审查，识别潜在缺陷。
+                </div>
+                <div class="skill-status">✅ 已实现 | API就绪</div>
+            </div>
+
+            <div class="skill-card" onclick="window.location.href='skill5_repair.html'">
+                <div class="skill-number">5</div>
+                <div class="skill-title">专利修复</div>
+                <div class="skill-desc">
+                    解析审查意见通知书，生成2-3个修改方案，自动撰写答复意见书，更新申请文件。
+                </div>
+                <div class="skill-status">✅ 已实现 | API就绪</div>
+            </div>
+
+            <div class="skill-card" onclick="window.location.href='index.html'">
+                <div class="skill-number">6</div>
+                <div class="skill-title">专利检索与分析</div>
+                <div class="skill-desc">
+                    多源专利检索（Google Patents），关键词分析、IPC分类统计、新颖性评估报告。
+                </div>
+                <div class="skill-status">✅ 已完成 | 前后端就绪</div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🚀 快速开始</h2>
+            <div class="demo-area">
+                <h3 style="margin-bottom: 15px;">示例案例：基于区块链的数据加密方法</h3>
+                <ol style="line-height: 2; color: #666;">
+                    <li><strong>Skill 1</strong>: 输入技术创意 → 通过5-10轮对话 → 生成发明意图文档</li>
+                    <li><strong>Skill 2</strong>: 基于发明意图 → 生成技术交底书</li>
+                    <li><strong>Skill 3</strong>: 基于交底书 → 生成权利要求书+说明书+摘要</li>
+                    <li><strong>Skill 4</strong>: 审查模拟 → 识别缺陷（如"N个密钥分片"范围不明）</li>
+                    <li><strong>Skill 5</strong>: 解析模拟审查意见 → 生成修改方案 → 生成答复意见</li>
+                    <li><strong>Skill 6</strong>: 检索相似专利 → 新颖性分析</li>
+                </ol>
+                <br>
+                <a href="index.html" class="btn">开始使用 Skill 6 (专利检索)</a>
+                <button class="btn" onclick="alert('Skills 1-5 的前端界面已准备好API接口，可通过 /api/v1/skills/* 调用')" style="margin-left: 10px;">查看API文档</button>
+            </div>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 12px; margin-top: 30px; text-align: center; color: #666;">
+            <p><strong>后端服务</strong>: http://localhost:8000</p>
+            <p><strong>API文档</strong>: <a href="http://localhost:8000/docs" target="_blank" style="color: #667eea;">http://localhost:8000/docs</a></p>
+            <p style="margin-top: 10px; font-size: 13px;">所有6个Skills的后端API均已就绪 | 前端界面持续优化中</p>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+# macOS / editor
+.git/
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+
+# Node / frontend build
+node_modules/
+frontend-react/node_modules/
+dist/
+frontend-react/dist/
+coverage/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+
+# Runtime data / logs
+logs/
+data/
+backend/data/
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# Local platform / tooling state
+.minikube/
+.deepeval/
+
+# Local debug / generated files
+debug_google_patents.html
+docs/*.pdf

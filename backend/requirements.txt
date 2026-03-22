@@ -1,0 +1,48 @@
+# Python后端依赖
+
+# Web框架
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+
+# 数据库
+sqlalchemy==2.0.25
+pymysql==1.1.0
+alembic==1.13.1
+
+# PDF处理
+pdfplumber==0.11.0
+PyPDF2==3.0.1
+# OCR（可选）
+# pytesseract==0.3.10
+# pdf2image==1.17.0
+
+# 网页爬虫
+beautifulsoup4==4.12.3
+lxml==5.1.0
+selenium==4.16.0
+
+# LLM客户端
+openai==1.10.0
+anthropic==0.18.0
+google-generativeai==0.3.2
+
+# 向量数据库
+chromadb==0.4.22
+
+# 中文分词
+jieba==0.42.1
+
+# HTTP客户端
+requests==2.31.0
+httpx==0.26.0
+
+# 工具库
+python-dotenv==1.0.0
+click==8.1.7
+Jinja2==3.1.4
+
+# 测试
+pytest==7.4.4
+pytest-asyncio==0.23.3
+pytest-cov==4.1.0

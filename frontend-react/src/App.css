@@ -1,0 +1,263 @@
+:root {
+  --primary: #0f766e;
+  --primary-dark: #114e4a;
+  --primary-soft: #d9f0eb;
+  --accent: #b45309;
+  --success: #1f7a45;
+  --danger: #b42318;
+  --warning: #a15c07;
+  --ink: #132238;
+  --muted: #5e6b7a;
+  --gray: #f3efe6;
+  --panel: #fffaf1;
+  --border: rgba(19, 34, 56, 0.12);
+  --shadow: 0 18px 44px rgba(11, 37, 34, 0.10);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.16), transparent 26%),
+    radial-gradient(circle at top right, rgba(180, 83, 9, 0.10), transparent 20%),
+    linear-gradient(180deg, #f4efe5 0%, #efe7d5 100%);
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navigation */
+.nav {
+  background: rgba(255, 250, 241, 0.86);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 6px 24px rgba(19, 34, 56, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(19, 34, 56, 0.08);
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+  letter-spacing: -0.03em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.nav-links a {
+  color: var(--ink);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  transition: all 0.3s;
+  font-size: 0.95rem;
+}
+
+.nav-links a:hover {
+  background: rgba(15, 118, 110, 0.10);
+  color: var(--primary);
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+/* Buttons */
+.btn {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  box-shadow: 0 10px 22px rgba(15, 118, 110, 0.18);
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(15, 118, 110, 0.22);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-success {
+  background: var(--success);
+  box-shadow: 0 10px 22px rgba(31, 122, 69, 0.18);
+}
+
+.btn-secondary {
+  background: rgba(19, 34, 56, 0.08);
+  color: var(--ink);
+  box-shadow: none;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  box-shadow: none;
+}
+
+/* Skill Page */
+.skill-page {
+  background: var(--panel);
+  padding: 2rem;
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.skill-page h1 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+.input-group {
+  display: flex;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+.input-group input,
+.input-group textarea {
+  flex: 1;
+  min-width: 300px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.84);
+  color: var(--ink);
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.12);
+}
+
+/* Chat Box */
+.chat-box {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.message {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+}
+
+.message.user {
+  background: rgba(15, 118, 110, 0.12);
+  margin-left: 20%;
+}
+
+.message.assistant {
+  background: rgba(255, 255, 255, 0.94);
+  margin-right: 20%;
+}
+
+/* Document Preview */
+.document-preview {
+  background: rgba(255, 255, 255, 0.82);
+  padding: 1.5rem;
+  border-radius: 16px;
+  margin-top: 1.5rem;
+  max-height: 600px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+}
+
+.document-preview h1,
+.document-preview h2,
+.document-preview h3 {
+  color: var(--primary);
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.draft-id {
+  background: rgba(31, 122, 69, 0.10);
+  padding: 1rem;
+  border-radius: 14px;
+  margin: 1rem 0;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  color: white;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.patent-card,
+.issue-item {
+  background: rgba(255, 255, 255, 0.92);
+  padding: 1rem;
+  border-radius: 14px;
+  margin-bottom: 1rem;
+  border-left: 4px solid var(--primary);
+}
+
+@media (max-width: 960px) {
+  .nav-container {
+    padding: 1rem;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .main-content {
+    margin: 1.25rem auto;
+    padding: 0 1rem 1rem;
+  }
+
+  .skill-page {
+    padding: 1.25rem;
+    border-radius: 20px;
+  }
+}
