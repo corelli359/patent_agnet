@@ -1,36 +1,46 @@
-# 文档整理完成 ✅
+# Changelog
 
-## 项目文档结构
+本文档记录仓库层面的主要变更，采用“新版本在前”的方式维护。
 
-所有项目文档现已统一存放在项目目录：
+## [Unreleased]
 
-```
-/Users/weipeng/Desktop/农行专利/2026/patent_agnet/
-├── README.md                    # 项目总览
-├── requirements.md              # 完整需求文档（Skill架构版）
-├── docs/                        # 📚 文档中心
-│   ├── task.md                  # 任务清单（开发进度追踪）
-│   ├── skill6_implementation_plan.md  # Skill 6详细实施计划
-│   └── 专利审查指南.pdf          # 专利格式规范
-└── skills/                      # 6个Skill的SKILL.md文档
-    ├── invention_intent/SKILL.md
-    ├── disclosure_writing/SKILL.md
-    ├── patent_drafting/SKILL.md
-    ├── patent_examination/SKILL.md
-    ├── patent_repair/SKILL.md
-    └── patent_search/SKILL.md
-```
+### 文档
 
-## 关键更正
+- 重写仓库首页 README，统一项目定位、目录说明、启动方式和部署入口
+- 将变更记录改为正式的版本日志格式
+- 新增 `v0.1.0` 发布说明文档，便于后续 GitHub Release 复用
 
-✅ 所有文档中的 "Google Search" 已更正为 "Google Patents"
+## [v0.1.0] - 2026-03-23
 
-## 下一步
+### 产品骨架
 
-准备开始 **Skill 6 - 专利检索与分析** 的实施：
-1. 基础设施搭建（PDF解析、LLM抽象层、Chroma）
-2. Google Patents集成
-3. 检索历史管理
-4. 共性关键词 + IPC分类分析
+- 建立以 `PatentDraft` 为核心的项目级工作流主线
+- 打通发明意图、交底书、起草、审查、修复、检索 6 个能力模块
+- 增加项目总览、版本差异、检索挂接与交付包相关接口
 
-是否开始实施？
+### 后端
+
+- 提供 FastAPI 服务入口与项目级 API
+- 增加数据库自动建表初始化
+- 增加 LLM provider 自动回退逻辑
+- 补齐核心服务与测试覆盖
+
+### 前端
+
+- 提供 React 工作台与技能页面
+- 统一前端 API 基址逻辑，支持本地开发与集群访问
+
+### 部署
+
+- 新增 Minikube 挂载式部署方案
+- 提供 `autopat` namespace、前后端 Deployment、Service、Ingress 清单
+- 提供一键部署脚本，支持停掉旧 `llmsafe` 实例并完成滚动部署
+
+### 仓库治理
+
+- 初始化源码仓库并补充严格 `.gitignore`
+- 默认忽略运行数据、日志、构建产物、个人环境配置和本地参考资料
+
+## [v0.0.x]
+
+- 早期原型与技能拆分阶段，未做正式版本化管理
