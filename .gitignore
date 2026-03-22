@@ -1,5 +1,6 @@
 # macOS / editor
 .git/
+.git.sandbox-backup.*/
 .DS_Store
 .idea/
 .vscode/
